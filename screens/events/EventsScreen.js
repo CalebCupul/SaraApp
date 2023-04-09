@@ -1,8 +1,8 @@
-import { Text } from "react-native";
+import { UserIcon } from "react-native-heroicons/outline";
 
 function EventsScreen(){
     return (
-        <Text>Events</Text>
+        <UserIcon color="gray" />
     )
 }
 
