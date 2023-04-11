@@ -2,10 +2,7 @@ import { Urbanist_700Bold as UrbanistBold } from "@expo-google-fonts/urbanist";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from "expo-status-bar";
-import { useCallback } from "react";
-import { StyleSheet } from "react-native";
 import {
   AcademicCapIcon,
   CalendarDaysIcon,
@@ -15,24 +12,24 @@ import EventsScreen from "./screens/events/EventsScreen";
 import RecordsScreen from "./screens/records/RecordsScreen";
 import ProfileScreen from "./screens/users/ProfileScreen";
 
-SplashScreen.preventAutoHideAsync()
 const Tab = createBottomTabNavigator();
+// SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   let [fontsLoaded] = useFonts({
     UrbanistBold,
   });
 
-  const onLayourRootView = useCallback( async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync()
-    }
-  }, [fontsLoaded])
+  // const onLayourRootView = useCallback(async () => {
+  //   if (fontsLoaded) {
+  //     await SplashScreen.hideAsync();
+  //   }
+  // }, [fontsLoaded]);
 
   if (!fontsLoaded) {
     return null;
   }
-
+  // Agregar a NavigationContainer ? onLayout={onLayourRootView}
   return (
     <>
       <StatusBar style="dark"></StatusBar>
@@ -70,12 +67,3 @@ export default function App() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
