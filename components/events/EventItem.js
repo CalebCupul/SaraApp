@@ -1,10 +1,11 @@
 import { Image, ScrollView, Text, View } from "react-native";
 import {
-    CalendarDaysIcon,
-    HeartIcon
+  CalendarDaysIcon,
+  HeartIcon
 } from "react-native-heroicons/outline";
 
-function EventsItem() {
+function EventItem(props) {
+  // console.log(props)
   return (
     <View className="bg-white rounded-md p-4 mt-2">
       <View className="flex-row space-x-4">
@@ -19,7 +20,7 @@ function EventsItem() {
               className="text-lg text-dark-gray"
               style={{ fontFamily: "UrbanistBold" }}
             >
-              XVII COCONGRESOCONGRESOCONGRESOCONGRESONGRESOCONGRESO CADESE
+              {props.event.id} - {props.event.codigo_alumno}
             </Text>
             <HeartIcon style={{ color: "#1C1C1E" }} />
           </View>
@@ -84,4 +85,4 @@ function EventsItem() {
   );
 }
 
-export default EventsItem;
+export default EventItem;
