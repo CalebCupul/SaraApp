@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Pressable, Text, TextInput, View } from "react-native";
 import {
   AdjustmentsHorizontalIcon,
-  MagnifyingGlassIcon,
+  MagnifyingGlassIcon
 } from "react-native-heroicons/outline";
 import { getEvents } from "../../api/eventsApi";
 import EventItem from "../../components/events/EventItem";

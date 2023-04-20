@@ -3,10 +3,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
+import 'react-native-gesture-handler';
 import {
   AcademicCapIcon,
   CalendarDaysIcon,
-  UserCircleIcon,
+  UserCircleIcon
 } from "react-native-heroicons/outline";
 import EventsScreen from "./screens/events/EventsScreen";
 import RecordsScreen from "./screens/records/RecordsScreen";
