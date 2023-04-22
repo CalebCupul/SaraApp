@@ -13,8 +13,6 @@ function EventsScreen() {
   const [loading, setLoading] = useState(false);
   const [maxPages, setMaxPages] = useState(null);
   
-  console.log(maxPages)
-
   useEffect(() => {
     fetchEvents()
   }, []);

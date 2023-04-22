@@ -1,11 +1,18 @@
+import { useNavigation } from "@react-navigation/core";
 import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import { CalendarDaysIcon, HeartIcon } from "react-native-heroicons/outline";
 
 function EventItem(props) {
-  // console.log(props)
+
+  const navigation = useNavigation()
+
+  function eventItemPressHandler(){
+    navigation.navigate("EventDetails")
+  }
+
   return (
     <View className="bg-white rounded-md mt-2">
-      <Pressable android_ripple={{ color: "gray", borderless: true }}>
+      <Pressable onPress={eventItemPressHandler} android_ripple={{ color: "gray", borderless: true }}>
         <View className="p-4">
           <View className="flex-row space-x-4">
             <Image
