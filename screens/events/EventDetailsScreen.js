@@ -1,8 +1,8 @@
-import { Text } from "react-native";
 
-function EventDetailsScreen(){
+function EventDetailsScreen({route}){
+    const event = route.params.props
     return (
-        <Text>Event details screen</Text>
+        <></>
     )
 }
 

@@ -6,7 +6,7 @@ const Stack = createNativeStackNavigator();
 function RecordStackNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Records" component={RecordsScreen} />
+      <Stack.Screen name="Records" component={RecordsScreen} options={{title: "Tus constancias"}} />
     </Stack.Navigator>
   );
 }

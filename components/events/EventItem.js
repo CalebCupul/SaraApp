@@ -3,16 +3,17 @@ import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import { CalendarDaysIcon, HeartIcon } from "react-native-heroicons/outline";
 
 function EventItem(props) {
+  const navigation = useNavigation();
 
-  const navigation = useNavigation()
-
-  function eventItemPressHandler(){
-    navigation.navigate("EventDetails")
+  function eventItemPressHandler() {
+    navigation.navigate("EventDetails", {props});
   }
-
   return (
     <View className="bg-white rounded-md mt-2">
-      <Pressable onPress={eventItemPressHandler} android_ripple={{ color: "gray", borderless: true }}>
+      <Pressable
+        onPress={eventItemPressHandler}
+        android_ripple={{ color: "gray", borderless: true }}
+      >
         <View className="p-4">
           <View className="flex-row space-x-4">
             <Image
@@ -23,10 +24,10 @@ function EventItem(props) {
               <View className="flex-row justify-between">
                 <Text
                   numberOfLines={1}
-                  className="text-lg text-dark-gray"
+                  className="text-lg text-dark-gray w-4/5"
                   style={{ fontFamily: "UrbanistBold" }}
                 >
-                  {props.event.id} - {props.event.codigo_alumno}
+                  {props.event.titulo}
                 </Text>
                 <HeartIcon style={{ color: "#1C1C1E" }} />
               </View>
@@ -35,12 +36,12 @@ function EventItem(props) {
                 className="text-light-gray w-3/4"
                 style={{ fontFamily: "UrbanistBold" }}
               >
-                Caleb Cupul
+                {props.event.ponente}
               </Text>
             </View>
           </View>
           <View className="mt-4 flex-row" pointerEvents={"none"}>
-            <ScrollView horizontal={true} className="space-x-4 pb-2" >
+            <ScrollView horizontal={true} className="space-x-4 pb-2">
               <Text
                 style={{ fontFamily: "UrbanistBold" }}
                 className="bg-default-gray rounded-xl text-sm py-1 px-3"
@@ -84,7 +85,7 @@ function EventItem(props) {
               style={{ fontFamily: "UrbanistBold" }}
               className="text-light-gray"
             >
-              24 de Marzo
+              {props.event.fecha}
             </Text>
           </View>
         </View>

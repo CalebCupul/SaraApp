@@ -22,6 +22,7 @@ function BottomTabNavigator() {
           name="RecordsScreen"
           component={RecordStackNavigator}
           options={{
+            headerShown: false,
             tabBarIcon: () => {
               return <AcademicCapIcon color="gray" />;
             },
@@ -31,6 +32,7 @@ function BottomTabNavigator() {
           name="ProfileScreen"
           component={ProfileStackNavigator}
           options={{
+            headerShown: false,
             tabBarIcon: () => {
               return <UserCircleIcon color="gray" />;
             },
