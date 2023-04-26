@@ -1,4 +1,4 @@
-import { Image, Text, View } from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
 import { ArrowDownTrayIcon } from "react-native-heroicons/outline";
 
 function RecordItem(props) {
@@ -9,8 +9,9 @@ function RecordItem(props) {
     fecha_diff,
     evento: { fecha: fecha_evento, id: id_evento, titulo, ponente },
   } = props.event;
+
   return (
-    <View className="flex-row space-x-4">
+    <Pressable className="flex-row space-x-4" >
       <Image
         className="w-14 h-14 object-contain rounded-md"
         source={{ uri: "https://blog.hubspot.com/hubfs/image8-2.jpg" }}
@@ -24,7 +25,9 @@ function RecordItem(props) {
           >
             {titulo}
           </Text>
-          <ArrowDownTrayIcon style={{ color: "#1C1C1E" }} width={20} />
+          <Pressable onPress={() => console.log('pressed nested')} android_ripple={{ color: "gray", borderless: true }}>
+            <ArrowDownTrayIcon style={{ color: "#1C1C1E" }} width={20} />
+          </Pressable>
         </View>
         <View className="flex-row justify-between">
           <Text
@@ -43,7 +46,7 @@ function RecordItem(props) {
           </Text>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 }
 
