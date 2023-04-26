@@ -1,4 +1,4 @@
-import { Urbanist_700Bold as UrbanistBold } from "@expo-google-fonts/urbanist";
+import { Urbanist_500Medium as UrbanistMedium, Urbanist_700Bold as UrbanistBold } from "@expo-google-fonts/urbanist";
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
@@ -10,6 +10,7 @@ import BottomTabNavigator from "./navigators/MainNavigator";
 export default function App() {
   let [fontsLoaded] = useFonts({
     UrbanistBold,
+    UrbanistMedium
   });
 
   // const onLayourRootView = useCallback(async () => {
