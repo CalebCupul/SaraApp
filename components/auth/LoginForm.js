@@ -1,14 +1,19 @@
 import { TextInput, View } from "react-native";
 
 function LoginForm() {
+  const [inputValues, setInputValues] = useState({
+    email: "",
+    password: "",
+  });
 
-  const [email, setEmail] = useState('')
-  const [password, setpassword] = useState('')
-
-
-  function emailChangedHandler(){}
-
-  function passwordChangedHandler(){}
+  function inputChangedHandler(inputIdentifier, enteredValue) {
+    setInputValues((prevInputValues) => {
+      return {
+        ...prevInputValues,
+        [inputIdentifier]: enteredValue,
+      };
+    });
+  }
 
   return (
     <View>
@@ -18,14 +23,16 @@ function LoginForm() {
         className="mt-4 border-b border-neutral-200 py-1"
         keyboardType="email-address"
         textContentType="emailAddress"
-        onChangeText={emailChangedHandler}
+        onChangeText={(enteredValue) => inputChangedHandler('email', enteredValue)}
+        value={inputValues.email}
       />
       <TextInput
         style={{ fontFamily: "UrbanistMedium" }}
         placeholder="Contraseña"
         className="mt-4 border-b border-neutral-200 py-1"
         textContentType="password"
-        onChangeText={passwordChangedHandler}
+        onChangeText={(enteredValue) => inputChangedHandler('password', enteredValue)}
+        value={inputValues.password}
       />
     </View>
   );
