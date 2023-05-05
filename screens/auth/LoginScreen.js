@@ -1,8 +1,15 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useState } from "react";
 import { Image, Pressable, Text, View } from "react-native";
 import LoginForm from "../../components/auth/LoginForm";
 
 function LoginScreen({ navigation }) {
+  const [userData, setUserData] = useState({})
+  
+  function onSubmit(userData){
+    console.log(userData)
+  }
+
   return (
     <View className="h-full bg-white p-4">
       <Image
@@ -18,24 +25,8 @@ function LoginScreen({ navigation }) {
         Ingresar
       </Text>
 
-        <LoginForm/>
+        <LoginForm onSubmit={onSubmit}/>
 
-      <Text
-        style={{ fontFamily: "UrbanistBold" }}
-        className="ml-auto mt-2 text-light-gray"
-      >
-        Olvidé mi contraseña
-      </Text>
-      <Pressable onPress={() => navigation.navigate("Home")}>
-        <View className="mt-4 bg-dark-gray rounded-md p-2">
-          <Text
-            className="text-white text-center"
-            style={{ fontFamily: "UrbanistBold" }}
-          >
-            Ingresar
-          </Text>
-        </View>
-      </Pressable>
 
       <View className="flex flex-row mt-8">
         <View className="w-1/3 h-3 border-b border-neutral-200"></View>
