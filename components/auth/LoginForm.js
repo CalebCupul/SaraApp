@@ -28,6 +28,7 @@ function LoginForm(props) {
 
     if (!passwordIsValid || !emailIsValid){
       Alert.alert('Formulario incompleto', 'Complete todos los campos para ingresar.')
+      return
     }
 
     props.onSubmit(userData)

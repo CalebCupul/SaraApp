@@ -8,6 +8,7 @@ function LoginScreen({ navigation }) {
   
   function onSubmit(userData){
     console.log(userData)
+    navigation.navigate('Home')
   }
 
   return (
