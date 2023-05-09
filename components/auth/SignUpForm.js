@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Alert, Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, Text, TextInput, View } from "react-native";
 
-function LoginForm(props) {
+function SignUpForm(props) {
   const [inputValues, setInputValues] = useState({
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
   function inputChangedHandler(inputIdentifier, enteredValue) {
@@ -16,22 +17,29 @@ function LoginForm(props) {
     });
   }
 
-  function submitHandler() {
+  function signUpHandler() {
     const userData = {
       email: inputValues.email,
       password: inputValues.password,
+      confirmPassword: inputValues.confirmPassword,
     };
 
     const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-    const emailIsValid = regex.test(userData.email)
-    const passwordIsValid = userData.password.length > 0
+    const emailIsValid = regex.test(userData.email);
+    const passwordIsValid = userData.password.length > 0;
+    const confirmPasswordIsValid = userData.confirmPassword.length > 0;
 
-    if (!passwordIsValid || !emailIsValid){
-      Alert.alert('Formulario incompleto', 'Complete todos los campos para ingresar.')
-      return
-    }
-
-    props.onSubmit(userData)
+    // if (!passwordIsValid || !emailIsValid || !confirmPasswordIsValid) {
+    //   Alert.alert(
+    //     "Formulario incompleto",
+    //     "Complete todos los campos para ingresar."
+    //   );
+    //   return;
+    // } else if (userData.password !== userData.confirmPassword) {
+    //   Alert.alert("Formulario incompleto", "Las constraseñas no coindicen.");
+    //   return;
+    // }
+    props.onSignUp(userData);
   }
 
   return (
@@ -57,21 +65,24 @@ function LoginForm(props) {
         }
         value={inputValues.password}
       />
+      <TextInput
+        style={{ fontFamily: "UrbanistMedium" }}
+        placeholder="Confirmar contraseña"
+        className="mt-4 border-b border-neutral-200 py-1"
+        textContentType="password"
+        onChangeText={(enteredValue) =>
+          inputChangedHandler("confirmPassword", enteredValue)
+        }
+        value={inputValues.confirmPassword}
+      />
 
-      <Text
-        style={{ fontFamily: "UrbanistBold" }}
-        className="ml-auto mt-2 text-light-gray"
-      >
-        Olvidé mi contraseña
-      </Text>
-
-      <Pressable onPress={submitHandler}>
+      <Pressable onPress={signUpHandler}>
         <View className="mt-4 bg-dark-gray rounded-md p-2">
           <Text
             className="text-white text-center"
             style={{ fontFamily: "UrbanistBold" }}
           >
-            Ingresar
+            Registrarse
           </Text>
         </View>
       </Pressable>
@@ -79,4 +90,4 @@ function LoginForm(props) {
   );
 }
 
-export default LoginForm;
+export default SignUpForm;

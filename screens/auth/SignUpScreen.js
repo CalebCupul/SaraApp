@@ -2,19 +2,21 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { useState } from "react";
 import { Image, Pressable, Text, View } from "react-native";
 import LoadingOverlay from "../../components/UI/LoadingOverlay";
-import LoginForm from "../../components/auth/LoginForm";
+import SignUpForm from "../../components/auth/SignUpForm";
 
-function LoginScreen({ navigation }) {
+function SignUpScreen({ navigation }) {
   const [userData, setUserData] = useState({})
   const [isAuthenticating, setIsAuthenticating] = useState(false)
-  
-  function onSubmit(userData){
-    console.log(userData)
-    navigation.navigate('Home')
+
+  async function onSignUp({email, password}){
+    setIsAuthenticating(true)
+    await createUser(email, password)
+    setIsAuthenticating(false)
+
   }
 
   if (isAuthenticating){
-    return <LoadingOverlay message="Iniciando sesión..." />
+    return <LoadingOverlay message="Estamos creando tu cuenta..." />
   }
 
   return (
@@ -22,18 +24,17 @@ function LoginScreen({ navigation }) {
       <Image
         className="w-64 h-64 mx-auto"
         source={{
-          uri: "https://doodleipsum.com/700x394?bg=ffffff&i=c0c14656dd1584d7ad6fc3e0b6cb9bf9",
+          uri: "https://doodleipsum.com/700x525?i=c40464c27eb96db99e50cd17f2ec4d0d",
         }}
       />
       <Text
         className="text-4xl text-dark-gray"
         style={{ fontFamily: "UrbanistBold" }}
       >
-        Ingresar
+        Registrarse
       </Text>
 
-        <LoginForm onSubmit={onSubmit}/>
-
+        <SignUpForm onSignUp={onSignUp}/>
 
       <View className="flex flex-row mt-8">
         <View className="w-1/3 h-3 border-b border-neutral-200"></View>
@@ -56,14 +57,14 @@ function LoginScreen({ navigation }) {
           style={{ fontFamily: "UrbanistBold" }}
           className="text-light-gray"
         >
-          ¿No tienes una cuenta?
+          ¿Tienes cuenta?
         </Text>
-        <Pressable onPress={() => navigation.navigate("SignUpScreen")}>
+        <Pressable onPress={() => navigation.navigate("LoginScreen")}>
           <Text
             style={{ fontFamily: "UrbanistBold" }}
             className="text-dark-gray"
           >
-            Regístrate
+            Inicia sesión
           </Text>
         </Pressable>
       </View>
@@ -71,4 +72,4 @@ function LoginScreen({ navigation }) {
   );
 }
 
-export default LoginScreen;
+export default SignUpScreen;
