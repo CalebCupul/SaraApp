@@ -1,3 +1,21 @@
+import { API_BASE_URL } from "@env";
+import axios from "axios";
+
+
+export const createUser = async (name, email, password) => {
+  try {
+    const response = axios.post(`${API_BASE_URL}/register`, {
+        name: 'TESTING222',
+        email: 'TESTING222@GMAIL.COM',
+        password: '123456789'
+    });
+    //
+    console.log(response.data)
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 // export const getUserInfo = async (token) => {
 //     try {
@@ -7,7 +25,3 @@
 //       console.error(error);
 //     }
 //   }
-  
-// export const createUser = async (email, password){
-//     axios.post(`${API_BASE_URL}/eventos?page=${page}`)
-// }

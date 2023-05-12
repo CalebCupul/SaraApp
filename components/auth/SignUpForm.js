@@ -3,6 +3,7 @@ import { Pressable, Text, TextInput, View } from "react-native";
 
 function SignUpForm(props) {
   const [inputValues, setInputValues] = useState({
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -19,6 +20,7 @@ function SignUpForm(props) {
 
   function signUpHandler() {
     const userData = {
+      name: inputValues.name,
       email: inputValues.email,
       password: inputValues.password,
       confirmPassword: inputValues.confirmPassword,
@@ -44,6 +46,17 @@ function SignUpForm(props) {
 
   return (
     <View>
+      <TextInput
+        style={{ fontFamily: "UrbanistMedium" }}
+        placeholder="Nombre"
+        className="mt-4 border-b border-neutral-200 py-1"
+//         keyboardType="name"
+        // textContentType="emailAddress"
+        onChangeText={(enteredValue) =>
+          inputChangedHandler("name", enteredValue)
+        }
+        value={inputValues.name}
+      />
       <TextInput
         style={{ fontFamily: "UrbanistMedium" }}
         placeholder="Correo"

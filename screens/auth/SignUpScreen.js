@@ -1,22 +1,23 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useState } from "react";
 import { Image, Pressable, Text, View } from "react-native";
+import { createUser } from "../../api/authApi";
 import LoadingOverlay from "../../components/UI/LoadingOverlay";
 import SignUpForm from "../../components/auth/SignUpForm";
 
 function SignUpScreen({ navigation }) {
-  const [userData, setUserData] = useState({})
-  const [isAuthenticating, setIsAuthenticating] = useState(false)
-
-  async function onSignUp({email, password}){
-    setIsAuthenticating(true)
-    await createUser(email, password)
-    setIsAuthenticating(false)
-
+  const [userData, setUserData] = useState({});
+  // const [token, setToken] = useState("");
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+  async function onSignUp({ name, email, password }) {
+    setIsAuthenticating(true);
+    const response = await createUser(name, email, password);
+    console.log(response)
+    setIsAuthenticating(false);
   }
 
-  if (isAuthenticating){
-    return <LoadingOverlay message="Estamos creando tu cuenta..." />
+  if (isAuthenticating) {
+    return <LoadingOverlay message="Estamos creando tu cuenta..." />;
   }
 
   return (
@@ -34,7 +35,7 @@ function SignUpScreen({ navigation }) {
         Registrarse
       </Text>
 
-        <SignUpForm onSignUp={onSignUp}/>
+      <SignUpForm onSignUp={onSignUp} />
 
       <View className="flex flex-row mt-8">
         <View className="w-1/3 h-3 border-b border-neutral-200"></View>
