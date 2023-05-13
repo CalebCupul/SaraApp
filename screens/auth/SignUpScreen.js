@@ -1,18 +1,24 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useState } from "react";
-import { Image, Pressable, Text, View } from "react-native";
+import { useContext, useState } from "react";
+import { Alert, Image, Pressable, Text, View } from "react-native";
 import { createUser } from "../../api/authApi";
-import LoadingOverlay from "../../components/UI/LoadingOverlay";
 import SignUpForm from "../../components/auth/SignUpForm";
+import LoadingOverlay from "../../components/UI/LoadingOverlay";
+import { UserContext } from "../../contexts/UserContext";
 
 function SignUpScreen({ navigation }) {
-  const [userData, setUserData] = useState({});
-  // const [token, setToken] = useState("");
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+
+  const userCtx = useContext(UserContext)
+
   async function onSignUp({ name, email, password }) {
     setIsAuthenticating(true);
     const response = await createUser(name, email, password);
-    console.log(response)
+    if (response.errors){
+      Alert.alert('Error', response.errors.email[0]) // fix later
+    } else {
+      userCtx.authenticate(response) // use token to authenticate user
+    }
     setIsAuthenticating(false);
   }
 

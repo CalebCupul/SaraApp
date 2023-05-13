@@ -1,16 +1,14 @@
 import { API_BASE_URL } from "@env";
 import axios from "axios";
 
-
 export const createUser = async (name, email, password) => {
   try {
-    const response = axios.post(`${API_BASE_URL}/register`, {
-        name: 'TESTING222',
-        email: 'TESTING222@GMAIL.COM',
-        password: '123456789'
+    const response = await axios.post(`${API_BASE_URL}/register`, {
+      name: name,
+      email: email,
+      password: password,
     });
-    //
-    console.log(response.data)
+
     return response.data;
   } catch (error) {
     console.error(error);

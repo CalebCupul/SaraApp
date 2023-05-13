@@ -31,16 +31,16 @@ function SignUpForm(props) {
     const passwordIsValid = userData.password.length > 0;
     const confirmPasswordIsValid = userData.confirmPassword.length > 0;
 
-    // if (!passwordIsValid || !emailIsValid || !confirmPasswordIsValid) {
-    //   Alert.alert(
-    //     "Formulario incompleto",
-    //     "Complete todos los campos para ingresar."
-    //   );
-    //   return;
-    // } else if (userData.password !== userData.confirmPassword) {
-    //   Alert.alert("Formulario incompleto", "Las constraseñas no coindicen.");
-    //   return;
-    // }
+    if (!passwordIsValid || !emailIsValid || !confirmPasswordIsValid) {
+      Alert.alert(
+        "Formulario incompleto",
+        "Complete todos los campos para ingresar."
+      );
+      return;
+    } else if (userData.password !== userData.confirmPassword) {
+      Alert.alert("Formulario incompleto", "Las constraseñas no coindicen.");
+      return;
+    }
     props.onSignUp(userData);
   }
 
