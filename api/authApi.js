@@ -4,9 +4,9 @@ import axios from "axios";
 export const createUser = async (name, email, password) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/register`, {
-      name: name,
-      email: email,
-      password: password,
+      name: 'bla22222',
+      email: 'bla22222@gmail.com',
+      password: 'password123',
     });
 
     return response.data;

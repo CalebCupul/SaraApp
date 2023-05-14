@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -13,8 +13,11 @@ import {
 } from "react-native-heroicons/outline";
 import { getEvents } from "../../api/eventsApi";
 import EventItem from "../../components/events/EventItem";
+import { UserContext } from "../../contexts/UserContext";
 
 function EventsScreen() {
+  const userCtx = useContext(UserContext)
+
   const [events, setEvents] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -31,7 +34,7 @@ function EventsScreen() {
     setLoading(true);
     try {
       // console.log(currentPage)
-      const response = await getEvents(currentPage);
+      const response = await getEvents(currentPage, userCtx.token);
       if (!maxPages) {
         setMaxPages(response.last_page);
       }

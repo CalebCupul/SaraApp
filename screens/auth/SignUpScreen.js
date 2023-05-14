@@ -2,8 +2,8 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { useContext, useState } from "react";
 import { Alert, Image, Pressable, Text, View } from "react-native";
 import { createUser } from "../../api/authApi";
-import SignUpForm from "../../components/auth/SignUpForm";
 import LoadingOverlay from "../../components/UI/LoadingOverlay";
+import SignUpForm from "../../components/auth/SignUpForm";
 import { UserContext } from "../../contexts/UserContext";
 
 function SignUpScreen({ navigation }) {
@@ -13,13 +13,14 @@ function SignUpScreen({ navigation }) {
 
   async function onSignUp({ name, email, password }) {
     setIsAuthenticating(true);
-    const response = await createUser(name, email, password);
-    if (response.errors){
-      Alert.alert('Error', response.errors.email[0]) // fix later
+    const data = await createUser(name, email, password);
+    if (data.errors){
+      Alert.alert('Error', data.errors.email[0]) // fix later
     } else {
-      userCtx.authenticate(response) // use token to authenticate user
+      userCtx.authenticate(data.data) // use token to authenticate user
     }
     setIsAuthenticating(false);
+    console.log(userCtx.userInfo)
   }
 
   if (isAuthenticating) {

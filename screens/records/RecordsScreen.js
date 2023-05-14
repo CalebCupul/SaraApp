@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Text, View } from "react-native";
 import { getRecords } from "../../api/recordsApi";
 import RecordItem from "../../components/records/RecordItem";
+import { UserContext } from "../../contexts/UserContext";
 
 function RecordsScreen() {
+  const userCtx = useContext(UserContext)
   const [records, setRecords] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -19,7 +21,7 @@ function RecordsScreen() {
     }
     setLoading(true);
     try {
-      const response = await getRecords(currentPage);
+      const response = await getRecords(currentPage, userCtx.token);
       if (!maxPages) {
         setMaxPages(response.last_page);
       }
