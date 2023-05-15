@@ -10,12 +10,14 @@ import {
 import { UserContext } from "../../contexts/UserContext";
 
 function ProfileScreen({ navigation }) {
-  const userCtx = useContext(UserContext)
+  const userCtx = useContext(UserContext);
 
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
-    <View className={`bg-white h-full ${modalVisible ? 'bg-black opacity-60' : ''}`}>
+    <View
+      className={`bg-white h-full ${modalVisible ? "bg-black opacity-60" : ""}`}
+    >
       <View className="mt-10">
         <Image
           className="bg-black w-40 h-40 rounded-full mx-auto"
@@ -28,19 +30,13 @@ function ProfileScreen({ navigation }) {
             className="text-2xl text-dark-gray text-center px-4"
             style={{ fontFamily: "UrbanistBold" }}
           >
-            Caleb German
+            {userCtx.userInfo.name}
           </Text>
           <Text
             className="text-lg text-dark-gray text-center px-4"
             style={{ fontFamily: "UrbanistMedium" }}
           >
-            caleb.cupul@alumnos.udg.mx
-          </Text>
-          <Text
-            className="text-lg text-dark-gray text-center px-4"
-            style={{ fontFamily: "UrbanistMedium" }}
-          >
-            219294633
+            {userCtx.userInfo.email}
           </Text>
         </View>
 
@@ -53,9 +49,19 @@ function ProfileScreen({ navigation }) {
           }}
         >
           <View className="p-4 mx-auto my-auto bg-white shadow-md rounded-md">
-            <Image className="w-40 h-40" source={{uri: 'https://www.investopedia.com/thmb/hJrIBjjMBGfx0oa_bHAgZ9AWyn0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/qr-code-bc94057f452f4806af70fd34540f72ad.png'}}/>
+            <Image
+              className="w-40 h-40"
+              source={{
+                uri: userCtx.userInfo.qrCodePath,
+              }}
+            />
             <Pressable onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={{ fontFamily: "UrbanistBold" }} className="text-center mt-4 py-2 rounded-md bg-dark-gray text-white">CERRAR</Text>
+              <Text
+                style={{ fontFamily: "UrbanistBold" }}
+                className="text-center mt-4 py-2 rounded-md bg-dark-gray text-white"
+              >
+                CERRAR
+              </Text>
             </Pressable>
           </View>
         </Modal>

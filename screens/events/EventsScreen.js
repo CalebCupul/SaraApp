@@ -68,7 +68,7 @@ function EventsScreen() {
       </View>
       <View className="px-4 pb-28">
         <Text className="text-lg" style={{ fontFamily: "UrbanistBold" }}>
-          Open job for you
+          ¡Bienvenido de vuelta, {userCtx.userInfo.name.split(' ')[0].charAt(0).toUpperCase() + userCtx.userInfo.name.split(' ')[0].slice(1).toLowerCase()}!
         </Text>
         <FlatList
           data={events}
