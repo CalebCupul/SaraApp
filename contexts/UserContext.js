@@ -24,7 +24,6 @@ function UserContextProvider({children}){
 
     function storageAuthentication(token, user){
         user.token = token
-        console.log(user)
         setUserInfo(user)
         setAuthToken(token)
     }

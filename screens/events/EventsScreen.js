@@ -33,7 +33,6 @@ function EventsScreen() {
     }
     setLoading(true);
     try {
-      // console.log(currentPage)
       const response = await getEvents(currentPage, userCtx.token);
       if (!maxPages) {
         setMaxPages(response.last_page);

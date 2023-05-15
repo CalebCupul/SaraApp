@@ -20,7 +20,6 @@ function SignUpScreen({ navigation }) {
       userCtx.authenticate(data.data) // use token to authenticate user
     }
     setIsAuthenticating(false);
-    console.log(userCtx.userInfo)
   }
 
   if (isAuthenticating) {

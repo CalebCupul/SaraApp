@@ -1,16 +1,25 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useState } from "react";
-import { Image, Pressable, Text, View } from "react-native";
+import { useContext, useState } from "react";
+import { Alert, Image, Pressable, Text, View } from "react-native";
+import { login } from "../../api/authApi";
 import LoadingOverlay from "../../components/UI/LoadingOverlay";
 import LoginForm from "../../components/auth/LoginForm";
+import { UserContext } from "../../contexts/UserContext";
 
 function LoginScreen({ navigation }) {
-  const [userData, setUserData] = useState({})
+  const userCtx = useContext(UserContext)
   const [isAuthenticating, setIsAuthenticating] = useState(false)
   
-  function onSubmit(userData){
-    console.log(userData)
-    navigation.navigate('Home')
+  async function onSubmit({email, password}){
+    setIsAuthenticating(true);
+    const data = await login(email, password);
+    if (data.errors){
+      Alert.alert('Error', data.errors.email[0]) // fix later
+    } else {
+      userCtx.authenticate(data.data)
+    }
+    setIsAuthenticating(false);
+
   }
 
   if (isAuthenticating){
