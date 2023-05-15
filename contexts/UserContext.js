@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, useState } from "react";
 
 export const UserContext = createContext({
@@ -6,6 +7,7 @@ export const UserContext = createContext({
     isAuthenticated: false,
     authenticate: (data) => {},
     logout: () => {},
+    storageAuthentication: (token, user) => {}
 })
 
 function UserContextProvider({children}){
@@ -16,11 +18,22 @@ function UserContextProvider({children}){
         const { token, ...userData } = data;
         setAuthToken(token)
         setUserInfo(userData)
+        AsyncStorage.setItem('token', token)
+        AsyncStorage.setItem('userId', data.id.toString())
+    }
+
+    function storageAuthentication(token, user){
+        user.token = token
+        console.log(user)
+        setUserInfo(user)
+        setAuthToken(token)
     }
 
     function logout(){
         setAuthToken(null)
         setUserInfo({})
+        AsyncStorage.removeItem('token')
+        AsyncStorage.removeItem('userId')
     }
 
     const value = {
@@ -28,7 +41,8 @@ function UserContextProvider({children}){
         userInfo: userInfo,
         isAuthenticated: !!authToken,
         authenticate: authenticate,
-        logout: logout
+        logout: logout,
+        storageAuthentication, storageAuthentication
     }
     
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>

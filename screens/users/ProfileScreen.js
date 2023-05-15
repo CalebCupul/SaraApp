@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Image, Modal, Pressable, Text, View } from "react-native";
 import {
   ArrowLeftOnRectangleIcon,
@@ -7,8 +7,11 @@ import {
   Cog6ToothIcon,
   QrCodeIcon,
 } from "react-native-heroicons/outline";
+import { UserContext } from "../../contexts/UserContext";
 
 function ProfileScreen({ navigation }) {
+  const userCtx = useContext(UserContext)
+
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -100,7 +103,7 @@ function ProfileScreen({ navigation }) {
               </View>
             </View>
           </Pressable>
-          <Pressable>
+          <Pressable onPress={() => userCtx.logout()}>
             <View className="flex flex-row space-x-2 items-center">
               <ArrowLeftOnRectangleIcon
                 style={{ color: "#1C1C1E" }}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Alert, Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, Text, TextInput, View } from "react-native";
 
 function SignUpForm(props) {
   const [inputValues, setInputValues] = useState({
@@ -26,21 +26,21 @@ function SignUpForm(props) {
       confirmPassword: inputValues.confirmPassword,
     };
 
-    const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-    const emailIsValid = regex.test(userData.email);
-    const passwordIsValid = userData.password.length > 0;
-    const confirmPasswordIsValid = userData.confirmPassword.length > 0;
+    // const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    // const emailIsValid = regex.test(userData.email);
+    // const passwordIsValid = userData.password.length > 0;
+    // const confirmPasswordIsValid = userData.confirmPassword.length > 0;
 
-    if (!passwordIsValid || !emailIsValid || !confirmPasswordIsValid) {
-      Alert.alert(
-        "Formulario incompleto",
-        "Complete todos los campos para ingresar."
-      );
-      return;
-    } else if (userData.password !== userData.confirmPassword) {
-      Alert.alert("Formulario incompleto", "Las constraseñas no coindicen.");
-      return;
-    }
+    // if (!passwordIsValid || !emailIsValid || !confirmPasswordIsValid) {
+    //   Alert.alert(
+    //     "Formulario incompleto",
+    //     "Complete todos los campos para ingresar."
+    //   );
+    //   return;
+    // } else if (userData.password !== userData.confirmPassword) {
+    //   Alert.alert("Formulario incompleto", "Las constraseñas no coindicen.");
+    //   return;
+    // }
     props.onSignUp(userData);
   }
 
