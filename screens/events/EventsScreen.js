@@ -5,11 +5,11 @@ import {
   Pressable,
   Text,
   TextInput,
-  View,
+  View
 } from "react-native";
 import {
   AdjustmentsHorizontalIcon,
-  MagnifyingGlassIcon,
+  MagnifyingGlassIcon
 } from "react-native-heroicons/outline";
 import { getEvents } from "../../api/eventsApi";
 import EventItem from "../../components/events/EventItem";
@@ -35,7 +35,7 @@ function EventsScreen() {
     try {
       const response = await getEvents(currentPage, userCtx.token);
       if (!maxPages) {
-        setMaxPages(response.last_page);
+        setMaxPages(response.meta.last_page);
       }
 
       setEvents((prevEvents) => [...prevEvents, ...response.data]);
@@ -68,8 +68,7 @@ function EventsScreen() {
       </View>
       <View className="px-4 pb-28">
         <Text className="text-lg" style={{ fontFamily: "UrbanistBold" }}>
-          ¡Bienvenido de vuelta, {userCtx.userInfo.name.split(' ')[0].charAt(0).toUpperCase() + userCtx.userInfo.name.split(' ')[0].slice(1).toLowerCase()}
-!
+          ¡Bienvenido de vuelta, { userCtx.userInfo.name &&  <Text className="text-lg capitalize" style={{ fontFamily: "UrbanistBold" }}>{userCtx.userInfo.name.split(' ')[0]}</Text>} !
 
         </Text>
         <FlatList
