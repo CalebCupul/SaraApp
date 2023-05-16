@@ -1,7 +1,12 @@
-import { Image, Pressable, Text, View } from "react-native";
+import { useContext } from "react";
+import { Image, Linking, Pressable, Text, View } from "react-native";
 import { ArrowDownTrayIcon } from "react-native-heroicons/outline";
+import { downloadRecord } from "../../api/recordsApi";
+import { UserContext } from "../../contexts/UserContext";
+
 
 function RecordItem(props) {
+  const userCtx = useContext(UserContext);
   const {
     id,
     codigo_alumno,
@@ -10,8 +15,21 @@ function RecordItem(props) {
     evento: { fecha: fecha_evento, id: id_evento, titulo, ponente },
   } = props.event;
 
+  async function downloadRecordHandler() {
+
+    const response = await downloadRecord(userCtx.token, id);
+    Linking.openURL(response.request.responseURL)
+
+    // Añadir preview de pdf
+    // <WebView
+    // source={{ uri: fileUrl }}
+    // style={{ flex: 1 }}
+    // />
+    
+  }
+
   return (
-    <Pressable className="flex-row space-x-4" >
+    <Pressable className="flex-row space-x-4">
       <Image
         className="w-14 h-14 object-contain rounded-md"
         source={{ uri: "https://blog.hubspot.com/hubfs/image8-2.jpg" }}
@@ -25,7 +43,7 @@ function RecordItem(props) {
           >
             {titulo}
           </Text>
-          <Pressable onPress={() => console.log('pressed nested')} android_ripple={{ color: "gray", borderless: true }}>
+          <Pressable onPress={() => downloadRecordHandler()}>
             <ArrowDownTrayIcon style={{ color: "#1C1C1E" }} width={20} />
           </Pressable>
         </View>

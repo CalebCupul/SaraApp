@@ -5,7 +5,7 @@ import RecordItem from "../../components/records/RecordItem";
 import { UserContext } from "../../contexts/UserContext";
 
 function RecordsScreen() {
-  const userCtx = useContext(UserContext)
+  const userCtx = useContext(UserContext);
   const [records, setRecords] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -14,16 +14,20 @@ function RecordsScreen() {
   useEffect(() => {
     fetchRecords();
   }, []);
-
   const fetchRecords = async () => {
     if (loading || (maxPages !== null && currentPage > maxPages)) {
       return;
     }
+
     setLoading(true);
     try {
-      const response = await getRecords(currentPage, userCtx.token);
+      const response = await getRecords(
+        currentPage,
+        userCtx.token,
+        userCtx.userInfo.email
+      );
       if (!maxPages) {
-        setMaxPages(response.last_page);
+        setMaxPages(response.meta.last_page);
       }
 
       setRecords((prevRecords) => [...prevRecords, ...response.data]);
@@ -40,7 +44,7 @@ function RecordsScreen() {
     <View className="p-4">
       {records.length > 0 && (
         <Text style={{ fontFamily: "UrbanistBold" }} className="text-lg mb-2">
-          {records.length + ' constancias'}
+          {records.length + " constancias"}
         </Text>
       )}
       <FlatList
