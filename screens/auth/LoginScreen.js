@@ -29,7 +29,7 @@ function LoginScreen({ navigation }) {
   return (
     <View className="h-full bg-white p-4">
       <Image
-        className="w-64 h-64 mx-auto"
+        className="w-64 h-64 mx-auto mt-10 mb-5"
         source={{
           uri: "https://doodleipsum.com/700x394?bg=ffffff&i=c0c14656dd1584d7ad6fc3e0b6cb9bf9",
         }}

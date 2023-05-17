@@ -8,8 +8,16 @@ function LoginStackNavigator() {
   return (
     <>
       <Stack.Navigator>
-        <Stack.Screen name="LoginScreen" component={LoginScreen} />
-        <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+        <Stack.Screen
+          name="LoginScreen"
+          component={LoginScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SignUpScreen"
+          component={SignUpScreen}
+          options={{ headerShown: false }}
+        />
         {/* <Stack.Screen name="Home" component={BottomTabNavigator} /> */}
       </Stack.Navigator>
     </>

@@ -68,7 +68,7 @@ function EventsScreen() {
       </View>
       <View className="px-4 pb-28">
         <Text className="text-lg" style={{ fontFamily: "UrbanistBold" }}>
-          ¡Bienvenido de vuelta, { userCtx.userInfo.name &&  <Text className="text-lg capitalize" style={{ fontFamily: "UrbanistBold" }}>{userCtx.userInfo.name.split(' ')[0]}</Text>} !
+          ¡Bienvenido de vuelta, { userCtx.userInfo.name &&  <Text className="text-lg capitalize" style={{ fontFamily: "UrbanistBold" }}>{userCtx.userInfo.name.split(' ')[0]}</Text>}!
 
         </Text>
         <FlatList

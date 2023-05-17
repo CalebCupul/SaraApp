@@ -11,9 +11,9 @@ function SignUpScreen({ navigation }) {
 
   const userCtx = useContext(UserContext)
 
-  async function onSignUp({ name, email, password }) {
+  async function onSignUp({ name, code, email, password }) {
     setIsAuthenticating(true);
-    const data = await createUser(name, email, password);
+    const data = await createUser(name, code, email, password);
     if (data.errors){
       Alert.alert('Error', data.errors.email[0]) // fix later
     } else {
@@ -29,7 +29,7 @@ function SignUpScreen({ navigation }) {
   return (
     <View className="h-full bg-white p-4">
       <Image
-        className="w-64 h-64 mx-auto"
+        className="w-64 h-64 mx-auto mt-5A"
         source={{
           uri: "https://doodleipsum.com/700x525?i=c40464c27eb96db99e50cd17f2ec4d0d",
         }}
@@ -59,7 +59,7 @@ function SignUpScreen({ navigation }) {
           <Ionicons name="logo-google" size={20} color="#1C1C1E" />
         </View>
       </Pressable>
-      <View className="mt-14 flex flex-row space-x-2 justify-center">
+      <View className="flex flex-row space-x-2 justify-center mt-5">
         <Text
           style={{ fontFamily: "UrbanistBold" }}
           className="text-light-gray"

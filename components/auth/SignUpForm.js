@@ -4,6 +4,7 @@ import { Pressable, Text, TextInput, View } from "react-native";
 function SignUpForm(props) {
   const [inputValues, setInputValues] = useState({
     name: "",
+    code: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -21,6 +22,7 @@ function SignUpForm(props) {
   function signUpHandler() {
     const userData = {
       name: inputValues.name,
+      code: inputValues.code,
       email: inputValues.email,
       password: inputValues.password,
       confirmPassword: inputValues.confirmPassword,
@@ -30,8 +32,9 @@ function SignUpForm(props) {
     // const emailIsValid = regex.test(userData.email);
     // const passwordIsValid = userData.password.length > 0;
     // const confirmPasswordIsValid = userData.confirmPassword.length > 0;
+    // const codeIsValid = userData.code.length > 0
 
-    // if (!passwordIsValid || !emailIsValid || !confirmPasswordIsValid) {
+    // if (!passwordIsValid || !emailIsValid || !confirmPasswordIsValid || !codeIsValid) {
     //   Alert.alert(
     //     "Formulario incompleto",
     //     "Complete todos los campos para ingresar."
@@ -57,6 +60,18 @@ function SignUpForm(props) {
         }
         value={inputValues.name}
       />
+       <TextInput
+        style={{ fontFamily: "UrbanistMedium" }}
+        placeholder="Código"
+        className="mt-4 border-b border-neutral-200 py-1"
+        //keyboardType="name"
+        // textContentType="emailAddress"
+        onChangeText={(enteredValue) =>
+          inputChangedHandler("code", enteredValue)
+        }
+        value={inputValues.code}
+      />
+      
       <TextInput
         style={{ fontFamily: "UrbanistMedium" }}
         placeholder="Correo"
