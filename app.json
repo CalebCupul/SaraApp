@@ -1,5 +1,13 @@
 {
   "expo": {
+    "plugins": [
+      [
+        "expo-barcode-scanner",
+        {
+          "cameraPermission": "Allow SaraApp to access camera."
+        }
+      ]
+    ],
     "name": "saraApp",
     "slug": "saraApp",
     "version": "1.0.0",

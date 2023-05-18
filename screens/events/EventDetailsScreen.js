@@ -1,22 +1,27 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import {
   ArrowUturnRightIcon,
   ClockIcon,
   MapPinIcon,
-  QrCodeIcon,
+  QrCodeIcon
 } from "react-native-heroicons/outline";
+import QrCodeScanner from "../../components/QrCodeScanner";
 import { UserContext } from "../../contexts/UserContext";
 
 function EventDetailsScreen({ route }) {
   const event = route.params.props.event;
   const userCtx = useContext(UserContext);
+  const [showScanner, setShowScanner] = useState(false)
 
   const description =
     "¡Bienvenidos al evento de La relación de la contaminación con los cocodrilos de Puerto Vallarta! Este será un encuentro especial para abordar la problemática que representa la contaminación en la región y su impacto en la fauna local, en particular en los cocodrilos. La cita será en el hermoso puerto de Vallarta, ubicado en la costa del Pacífico mexicano, el cual es reconocido por su belleza natural, su cultura y su gastronomía. Durante este evento, expertos en medio ambiente y conservación, así como miembros de la comunidad local, compartirán información y experiencias sobre la relación entre la contaminación y los cocodrilos de la región. La presencia de estos animales es fundamental para el equilibrio ecológico de la zona, sin embargo, los niveles de contaminación y la falta de conciencia ambiental están poniendo en riesgo su supervivencia.";
 
-  console.log(event);
-  return (
+    if ( showScanner ){
+      return <QrCodeScanner/>
+    }
+
+    return (
     <ScrollView>
       <View className="p-4 bg-white">
         <View className="flex-row justify-between">
@@ -93,8 +98,8 @@ function EventDetailsScreen({ route }) {
           </View>
         </View>
 
-        {userCtx.userInfo.role_id != 0 ? (
-          <Pressable>
+        {userCtx.userInfo.role_id != 1 ? (
+          <Pressable onPress={() => setShowScanner(!showScanner)}>
             <View className="mx-auto mt-4 py-1 px-4 flex flex-row space-x-1 rounded-full bg-dark-gray items-center justify-center w-60">
               <QrCodeIcon color={"white"} width={30} />
               <Text
