@@ -7,15 +7,34 @@ const BottomTab = createBottomTabNavigator();
 
 function BottomTabNavigator() {
     return (
-      <BottomTab.Navigator>
+      <BottomTab.Navigator
+      screenOptions={({route}) => ({
+        tabBarActiveTintColor: '#1C1C1E',
+        tabBarInactiveTintColor: '#959597',
+        tabBarShowLabel: false,
+        tabBarIcon: ({color}) => {
+          if (route.name === 'EventsScreen'){
+            return <CalendarDaysIcon color={color} size={27} />;
+          }
+
+          if (route.name === 'RecordsScreen'){
+            return <AcademicCapIcon color={color} size={27} />;
+          }
+
+          if (route.name === 'ProfileScreen'){
+            return <UserCircleIcon color={color} size={27} />;
+          }
+
+          return null
+        }
+      })}
+      >
+        
         <BottomTab.Screen
           name="EventsScreen"
           component={EventStackNavigator}
           options={{
-            headerShown: false,
-            tabBarIcon: () => {
-              return <CalendarDaysIcon color="gray" />;
-            },
+            headerShown: false
           }}
         ></BottomTab.Screen>
         <BottomTab.Screen
@@ -23,9 +42,6 @@ function BottomTabNavigator() {
           component={RecordStackNavigator}
           options={{
             headerShown: false,
-            tabBarIcon: () => {
-              return <AcademicCapIcon color="gray" />;
-            },
           }}
         ></BottomTab.Screen>
         <BottomTab.Screen
@@ -33,9 +49,6 @@ function BottomTabNavigator() {
           component={ProfileStackNavigator}
           options={{
             headerShown: false,
-            tabBarIcon: () => {
-              return <UserCircleIcon color="gray" />;
-            },
           }}
         ></BottomTab.Screen>
       </BottomTab.Navigator>

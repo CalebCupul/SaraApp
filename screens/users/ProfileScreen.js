@@ -5,7 +5,7 @@ import {
   BellAlertIcon,
   ChevronRightIcon,
   Cog6ToothIcon,
-  QrCodeIcon,
+  QrCodeIcon
 } from "react-native-heroicons/outline";
 import { UserContext } from "../../contexts/UserContext";
 
@@ -16,7 +16,7 @@ function ProfileScreen({ navigation }) {
 
   return (
     <View
-      className={`bg-white h-full ${modalVisible ? "bg-black opacity-60" : ""}`}
+      className={`bg-white pt-14 h-full ${modalVisible ? "bg-black opacity-60" : ""}`}
     >
       <View className="mt-10">
         <Image

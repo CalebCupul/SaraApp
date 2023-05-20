@@ -41,7 +41,7 @@ function RecordsScreen() {
   return (
     // PENDIENTE: CREAR LIST FOOTER COMPONENT PARA REUTILIZAR, AGREGARLE PADDING SOBRE ESTE COMPONENTE
     // Pressable sobre componente, sobre icono preparar descarga, sobre card redireccionar a constancia detail data: evento y constancia
-    <View className="p-4">
+    <View className="p-4 pt-14">
       {records.length > 0 && (
         <Text style={{ fontFamily: "UrbanistBold" }} className="text-lg mb-2">
           {records.length + " constancias"}

@@ -9,10 +9,10 @@ const Stack = createNativeStackNavigator();
 function ProfileStackNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Profile" component={ProfileScreen} />
-      <Stack.Screen name="EditProfileScreen" component={EditProfileScreen}/>
-      <Stack.Screen name="NotificationScreen" component={NotificationScreen} />
-      <Stack.Screen name="LoginScreen" component={LoginScreen} />
+      <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name="NotificationScreen" component={NotificationScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }}/>
     </Stack.Navigator>
   );
 }

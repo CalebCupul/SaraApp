@@ -7,8 +7,16 @@ const Stack = createNativeStackNavigator();
 function EventStackNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Events" component={EventsScreen} />
-      <Stack.Screen name="EventDetails" component={EventDetailsScreen} />
+      <Stack.Screen
+        name="Events"
+        component={EventsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="EventDetails"
+        component={EventDetailsScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }

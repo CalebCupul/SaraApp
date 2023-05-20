@@ -2,8 +2,9 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { QrCodeIcon } from "react-native-heroicons/outline";
+import { createRecord } from "../api/recordsApi";
 
-function QrCodeScanner() {
+function QrCodeScanner(props) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
@@ -16,10 +17,10 @@ function QrCodeScanner() {
     getBarCodeScannerPermissions();
   }, []);
 
-  const handleBarCodeScanned = ({ type, data }) => {
+   const handleBarCodeScanned = async ({ type, data }) => {
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-    // generar qr 
+    const response = await createRecord(props.token, props.eventId, data)
+    alert(response.message);
   };
 
   if (hasPermission === null) {

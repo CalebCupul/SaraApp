@@ -2,8 +2,8 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { useContext, useState } from "react";
 import { Alert, Image, Pressable, Text, View } from "react-native";
 import { login } from "../../api/authApi";
-import LoadingOverlay from "../../components/UI/LoadingOverlay";
 import LoginForm from "../../components/auth/LoginForm";
+import LoadingOverlay from "../../components/UI/LoadingOverlay";
 import { UserContext } from "../../contexts/UserContext";
 
 function LoginScreen({ navigation }) {
@@ -29,9 +29,10 @@ function LoginScreen({ navigation }) {
   return (
     <View className="h-full bg-white p-4">
       <Image
-        className="w-64 h-64 mx-auto mt-10 mb-5"
+        className="w-60 h-44 mx-auto mt-10 mb-5"
+        style={{resizeMode: 'contain'}}
         source={{
-          uri: "https://doodleipsum.com/700x394?bg=ffffff&i=c0c14656dd1584d7ad6fc3e0b6cb9bf9",
+          uri: "https://s3.amazonaws.com/s3.timetoast.com/public/uploads/photo/18154412/image/medium-62a2dae6b05a2a5c4f4ee257d9eb1cac.png",
         }}
       />
       <Text

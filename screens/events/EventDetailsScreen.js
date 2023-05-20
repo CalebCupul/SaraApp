@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
 import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import {
-  ArrowUturnRightIcon,
   ClockIcon,
   MapPinIcon,
   QrCodeIcon
@@ -14,16 +13,15 @@ function EventDetailsScreen({ route }) {
   const userCtx = useContext(UserContext);
   const [showScanner, setShowScanner] = useState(false)
 
-  const description =
-    "¡Bienvenidos al evento de La relación de la contaminación con los cocodrilos de Puerto Vallarta! Este será un encuentro especial para abordar la problemática que representa la contaminación en la región y su impacto en la fauna local, en particular en los cocodrilos. La cita será en el hermoso puerto de Vallarta, ubicado en la costa del Pacífico mexicano, el cual es reconocido por su belleza natural, su cultura y su gastronomía. Durante este evento, expertos en medio ambiente y conservación, así como miembros de la comunidad local, compartirán información y experiencias sobre la relación entre la contaminación y los cocodrilos de la región. La presencia de estos animales es fundamental para el equilibrio ecológico de la zona, sin embargo, los niveles de contaminación y la falta de conciencia ambiental están poniendo en riesgo su supervivencia.";
-
+  // const description =
+//     "¡Bienvenidos al evento de La relación de la contaminación con los cocodrilos de Puerto Vallarta! Este será un encuentro especial para abordar la problemática que representa la contaminación en la región y su impacto en la fauna local, en particular en los cocodrilos. La cita será en el hermoso puerto de Vallarta, ubicado en la costa del Pacífico mexicano, el cual es reconocido por su belleza natural, su cultura y su gastronomía. Durante este evento, expertos en medio ambiente y conservación, así como miembros de la comunidad local, compartirán información y experiencias sobre la relación entre la contaminación y los cocodrilos de la región. La presencia de estos animales es fundamental para el equilibrio ecológico de la zona, sin embargo, los niveles de contaminación y la falta de conciencia ambiental están poniendo en riesgo su supervivencia.";
     if ( showScanner ){
-      return <QrCodeScanner/>
+      return <QrCodeScanner eventId={event.id} token={userCtx.token}/>
     }
 
     return (
-    <ScrollView>
-      <View className="p-4 bg-white">
+    <ScrollView className="bg-white">
+      <View className="p-4 pt-14">
         <View className="flex-row justify-between">
           <View className="w-4/5">
             <Text className="text-xl" style={{ fontFamily: "UrbanistBold" }}>
@@ -56,11 +54,11 @@ function EventDetailsScreen({ route }) {
             source={{ uri: "https://blog.hubspot.com/hubfs/image8-2.jpg" }}
           />
         </View>
-        <View>
+        {/* <View>
           <Text className="mt-4">{description.split(". ").join("\n\n")}</Text>
-        </View>
+        </View> */}
 
-        <Text
+        {/* <Text
           style={{ fontFamily: "UrbanistBold" }}
           className="mt-4 text-dark-gray text-xl"
         >
@@ -96,7 +94,7 @@ function EventDetailsScreen({ route }) {
               </View>
             </Pressable>
           </View>
-        </View>
+        </View> */}
 
         {userCtx.userInfo.role_id != 1 ? (
           <Pressable onPress={() => setShowScanner(!showScanner)}>

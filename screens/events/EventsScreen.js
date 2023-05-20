@@ -16,7 +16,7 @@ import EventItem from "../../components/events/EventItem";
 import { UserContext } from "../../contexts/UserContext";
 
 function EventsScreen() {
-  const userCtx = useContext(UserContext)
+  const userCtx = useContext(UserContext);
 
   const [events, setEvents] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,54 +49,64 @@ function EventsScreen() {
 
   return (
     <>
-      <View className="flex-row p-4 space-x-2">
-        <View className="bg-white p-2 rounded-md flex-1 flex-row space-x-2">
-          <MagnifyingGlassIcon color="#1C1C1E" />
-          <TextInput placeholder="Buscar eventos" />
-        </View>
-        <View className="bg-white rounded-md">
-          <Pressable android_ripple={{ color: "gray", borderless: true }}>
-            <View className="p-2">
-              <AdjustmentsHorizontalIcon
-                color="#1C1C1E"
-                width={26}
-                height={26}
-              />
-            </View>
-          </Pressable>
-        </View>
-      </View>
-      <View className="px-4 pb-28">
-        <Text className="text-lg" style={{ fontFamily: "UrbanistBold" }}>
-          ¡Bienvenido de vuelta, { userCtx.userInfo.name &&  <Text className="text-lg capitalize" style={{ fontFamily: "UrbanistBold" }}>{userCtx.userInfo.name.split(' ')[0]}</Text>}!
-
-        </Text>
-        <FlatList
-          data={events}
-          renderItem={({ item }) => <EventItem event={item} />}
-          keyExtractor={(item) => item.id.toString()}
-          onEndReached={fetchEvents}
-          onEndReachedThreshold={0.1}
-          ListFooterComponent={() => {
-            if (loading) {
-              return (
-                <ActivityIndicator
-                  size="large"
-                  color="#0000ff"
-                  className="mt-4"
+      <View className="pt-14">
+        <View className="flex-row p-4 space-x-2">
+          <View className="bg-white p-2 rounded-md flex-1 flex-row space-x-2">
+            <MagnifyingGlassIcon color="#1C1C1E" />
+            <TextInput placeholder="Buscar eventos" />
+          </View>
+          <View className="bg-white rounded-md">
+            <Pressable android_ripple={{ color: "gray", borderless: true }}>
+              <View className="p-2">
+                <AdjustmentsHorizontalIcon
+                  color="#1C1C1E"
+                  width={26}
+                  height={26}
                 />
-              );
-            } else if (currentPage > maxPages) {
-              return (
-                <View>
-                  <Text>No more events to fetch</Text>
-                </View>
-              );
-            } else {
-              return null;
-            }
-          }}
-        />
+              </View>
+            </Pressable>
+          </View>
+        </View>
+        <View className="px-4 pb-28">
+          <Text className="text-lg" style={{ fontFamily: "UrbanistBold" }}>
+            ¡Bienvenido de vuelta,{" "}
+            {userCtx.userInfo.name && (
+              <Text
+                className="text-lg capitalize"
+                style={{ fontFamily: "UrbanistBold" }}
+              >
+                {userCtx.userInfo.name.split(" ")[0]}
+              </Text>
+            )}
+            !
+          </Text>
+          <FlatList
+            data={events}
+            renderItem={({ item }) => <EventItem event={item} />}
+            keyExtractor={(item) => item.id.toString()}
+            onEndReached={fetchEvents}
+            onEndReachedThreshold={0.1}
+            ListFooterComponent={() => {
+              if (loading) {
+                return (
+                  <ActivityIndicator
+                    size="large"
+                    color="#0000ff"
+                    className="mt-4"
+                  />
+                );
+              } else if (currentPage > maxPages) {
+                return (
+                  <View>
+                    <Text>No more events to fetch</Text>
+                  </View>
+                );
+              } else {
+                return null;
+              }
+            }}
+          />
+        </View>
       </View>
     </>
   );

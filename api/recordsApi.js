@@ -35,3 +35,23 @@ export const downloadRecord = async (token, id) => {
   }
 };
 
+export const createRecord = async (token, event_id, code) => {
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/asistencias`,
+      {
+        event_id: event_id,
+        code: code,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
