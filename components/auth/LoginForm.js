@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Alert, Pressable, Text, TextInput, View } from "react-native";
+import { EyeIcon, EyeSlashIcon } from "react-native-heroicons/outline";
 
 function LoginForm(props) {
   const [inputValues, setInputValues] = useState({
     email: "",
     password: "",
   });
+  const [isHidden, setIsHidden] = useState(true);
 
   function inputChangedHandler(inputIdentifier, enteredValue) {
     setInputValues((prevInputValues) => {
@@ -23,15 +25,18 @@ function LoginForm(props) {
     };
 
     const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-    const emailIsValid = regex.test(userData.email)
-    const passwordIsValid = userData.password.length > 0
+    const emailIsValid = regex.test(userData.email);
+    const passwordIsValid = userData.password.length > 0;
 
-    if (!passwordIsValid || !emailIsValid){
-      Alert.alert('Formulario incompleto', 'Complete todos los campos para ingresar.')
-      return
+    if (!passwordIsValid || !emailIsValid) {
+      Alert.alert(
+        "Formulario incompleto",
+        "Complete todos los campos para ingresar."
+      );
+      return;
     }
 
-    props.onSubmit(userData)
+    props.onSubmit(userData);
   }
 
   return (
@@ -39,7 +44,7 @@ function LoginForm(props) {
       <TextInput
         style={{ fontFamily: "UrbanistMedium" }}
         placeholder="Correo"
-        className="mt-4 border-b border-neutral-200 py-1"
+        className="mt-4 border-b border-neutral-200 h-10"
         keyboardType="email-address"
         textContentType="emailAddress"
         onChangeText={(enteredValue) =>
@@ -47,16 +52,23 @@ function LoginForm(props) {
         }
         value={inputValues.email}
       />
-      <TextInput
-        style={{ fontFamily: "UrbanistMedium" }}
-        placeholder="Contraseña"
-        className="mt-4 border-b border-neutral-200 py-1"
-        textContentType="password"
-        onChangeText={(enteredValue) =>
-          inputChangedHandler("password", enteredValue)
-        }
-        value={inputValues.password}
-      />
+      <View className="flex flex-row justify-between mt-4 border-b border-neutral-200">
+        <TextInput
+          style={{ fontFamily: "UrbanistMedium" }}
+          placeholder="Contraseña"
+          autoCapitalize="none"
+          secureTextEntry={ isHidden ? true : false }
+          className={`w-3/4 h-10 ${ isHidden && inputValues.password.length > 0 ? 'tracking-widest' : ''}`}
+          textContentType="password"
+          onChangeText={(enteredValue) =>
+            inputChangedHandler("password", enteredValue)
+          }
+          value={inputValues.password}
+        />
+        <Pressable onPress={() => setIsHidden(!isHidden)}>
+        { isHidden ? <EyeIcon color="#959597" size={27}></EyeIcon> : <EyeSlashIcon color="#959597" size={27}></EyeSlashIcon>}
+        </Pressable>
+      </View>
 
       <Text
         style={{ fontFamily: "UrbanistBold" }}
