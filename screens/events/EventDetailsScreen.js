@@ -12,7 +12,6 @@ function EventDetailsScreen({ route }) {
   const event = route.params.props.event;
   const userCtx = useContext(UserContext);
   const [showScanner, setShowScanner] = useState(false)
-
   // const description =
 //     "¡Bienvenidos al evento de La relación de la contaminación con los cocodrilos de Puerto Vallarta! Este será un encuentro especial para abordar la problemática que representa la contaminación en la región y su impacto en la fauna local, en particular en los cocodrilos. La cita será en el hermoso puerto de Vallarta, ubicado en la costa del Pacífico mexicano, el cual es reconocido por su belleza natural, su cultura y su gastronomía. Durante este evento, expertos en medio ambiente y conservación, así como miembros de la comunidad local, compartirán información y experiencias sobre la relación entre la contaminación y los cocodrilos de la región. La presencia de estos animales es fundamental para el equilibrio ecológico de la zona, sin embargo, los niveles de contaminación y la falta de conciencia ambiental están poniendo en riesgo su supervivencia.";
     if ( showScanner ){
@@ -45,13 +44,13 @@ function EventDetailsScreen({ route }) {
                 style={{ fontFamily: "UrbanistMedium" }}
                 className="text-dark-gray"
               >
-                Auditorio Juan Luis Cifuentes Lemus
+                {event.lugar}
               </Text>
             </View>
           </View>
           <Image
             className="w-16 h-16 object-contain rounded-md"
-            source={{ uri: "https://blog.hubspot.com/hubfs/image8-2.jpg" }}
+            source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ731AvgtjfNKrsHyqcB8qrtbN_ujKlbBwqzFdGs6hKvQ&s" }}
           />
         </View>
         {/* <View>

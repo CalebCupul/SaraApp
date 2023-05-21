@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/core";
-import { Image, Pressable, ScrollView, Text, View } from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
 import { CalendarDaysIcon, HeartIcon } from "react-native-heroicons/outline";
 
 function EventItem(props) {
@@ -18,7 +18,7 @@ function EventItem(props) {
           <View className="flex-row space-x-4">
             <Image
               className="w-14 h-14 object-contain rounded-md"
-              source={{ uri: "https://blog.hubspot.com/hubfs/image8-2.jpg" }}
+              source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ731AvgtjfNKrsHyqcB8qrtbN_ujKlbBwqzFdGs6hKvQ&s" }}
             />
             <View className="flex-1">
               <View className="flex-row justify-between">
@@ -40,7 +40,7 @@ function EventItem(props) {
               </Text>
             </View>
           </View>
-          <View className="mt-4 flex-row" pointerEvents={"none"}>
+          {/* <View className="mt-4 flex-row" pointerEvents={"none"}>
             <ScrollView horizontal={true} className="space-x-4 pb-2">
               <Text
                 style={{ fontFamily: "UrbanistBold" }}
@@ -67,7 +67,7 @@ function EventItem(props) {
                 Computación
               </Text>
             </ScrollView>
-          </View>
+          </View> */}
           {/* <View className="mt-2 w-3/5 flex flex-row items-center space-x-1">
           <MapPinIcon color={"#1C1C1E"} width={18} />
           <Text

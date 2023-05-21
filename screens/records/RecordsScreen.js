@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, Text, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { getRecords } from "../../api/recordsApi";
 import RecordItem from "../../components/records/RecordItem";
 import { UserContext } from "../../contexts/UserContext";
@@ -14,6 +14,7 @@ function RecordsScreen() {
   useEffect(() => {
     fetchRecords();
   }, []);
+
   const fetchRecords = async () => {
     if (loading || (maxPages !== null && currentPage > maxPages)) {
       return;
@@ -38,6 +39,24 @@ function RecordsScreen() {
       setLoading(false);
     }
   };
+
+  async function handleOnRefresh() {
+    setLoading(true);
+    try {
+      const response = await getRecords(
+        1,
+        userCtx.token,
+        userCtx.userInfo.email
+      );
+      setMaxPages(response.meta.last_page);
+      setRecords([...response.data]);
+      setCurrentPage(2);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }
   return (
     // PENDIENTE: CREAR LIST FOOTER COMPONENT PARA REUTILIZAR, AGREGARLE PADDING SOBRE ESTE COMPONENTE
     // Pressable sobre componente, sobre icono preparar descarga, sobre card redireccionar a constancia detail data: evento y constancia
@@ -60,25 +79,27 @@ function RecordsScreen() {
         keyExtractor={(item) => item.id.toString()}
         onEndReached={fetchRecords}
         onEndReachedThreshold={0.1}
-        ListFooterComponent={() => {
-          if (loading) {
-            return (
-              <ActivityIndicator
-                size="large"
-                color="#0000ff"
-                className="mt-4 pb-16"
-              />
-            );
-          } else if (currentPage > maxPages) {
-            return (
-              <View className="pb-16">
-                <Text>No more events to fetch</Text>
-              </View>
-            );
-          } else {
-            return null;
-          }
-        }}
+        refreshing={loading}
+            onRefresh={() => handleOnRefresh()}
+        // ListFooterComponent={() => {
+        //   if (loading) {
+        //     return (
+        //       <ActivityIndicator
+        //         size="large"
+        //         color="#0000ff"
+        //         className="mt-4 pb-16"
+        //       />
+        //     );
+        //   } else if (currentPage > maxPages) {
+        //     return (
+        //       <View className="pb-16">
+        //         <Text>No more events to fetch</Text>
+        //       </View>
+        //     );
+        //   } else {
+        //     return null;
+        //   }
+        // }}
       />
     </View>
   );

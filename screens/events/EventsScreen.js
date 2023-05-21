@@ -1,15 +1,9 @@
+import * as Crypto from "expo-crypto";
 import { useContext, useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  FlatList,
-  Pressable,
-  Text,
-  TextInput,
-  View
-} from "react-native";
+import { FlatList, Pressable, Text, TextInput, View } from "react-native";
 import {
   AdjustmentsHorizontalIcon,
-  MagnifyingGlassIcon
+  MagnifyingGlassIcon,
 } from "react-native-heroicons/outline";
 import { getEvents } from "../../api/eventsApi";
 import EventItem from "../../components/events/EventItem";
@@ -28,24 +22,41 @@ function EventsScreen() {
   }, []);
 
   const fetchEvents = async () => {
+    
     if (loading || (maxPages !== null && currentPage > maxPages)) {
+      console.log("inside if with loading: " + loading);
       return;
     }
+
     setLoading(true);
     try {
       const response = await getEvents(currentPage, userCtx.token);
       if (!maxPages) {
-        setMaxPages(response.meta.last_page);
+        setMaxPages((prevMaxPages) => response.meta.last_page);
       }
-
       setEvents((prevEvents) => [...prevEvents, ...response.data]);
-      setCurrentPage((currentPage) => currentPage + 1);
+      setCurrentPage((prevCurrentPage) => prevCurrentPage + 1);
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
   };
+
+  // FOR LATER: REFACTOR THIS FUNCTION
+  async function handleOnRefresh() {
+    setLoading(true);
+    try {
+      const response = await getEvents(1, userCtx.token);
+      setMaxPages(response.meta.last_page);
+      setEvents([...response.data]);
+      setCurrentPage(2);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <>
@@ -67,7 +78,7 @@ function EventsScreen() {
             </Pressable>
           </View>
         </View>
-        <View className="px-4 pb-28">
+        <View className="px-4 pb-56">
           <Text className="text-lg" style={{ fontFamily: "UrbanistBold" }}>
             ¡Bienvenido de vuelta,{" "}
             {userCtx.userInfo.name && (
@@ -83,28 +94,11 @@ function EventsScreen() {
           <FlatList
             data={events}
             renderItem={({ item }) => <EventItem event={item} />}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item) => Crypto.randomUUID()}
             onEndReached={fetchEvents}
             onEndReachedThreshold={0.1}
-            ListFooterComponent={() => {
-              if (loading) {
-                return (
-                  <ActivityIndicator
-                    size="large"
-                    color="#0000ff"
-                    className="mt-4"
-                  />
-                );
-              } else if (currentPage > maxPages) {
-                return (
-                  <View>
-                    <Text>No more events to fetch</Text>
-                  </View>
-                );
-              } else {
-                return null;
-              }
-            }}
+            refreshing={loading}
+            onRefresh={() => handleOnRefresh()}
           />
         </View>
       </View>

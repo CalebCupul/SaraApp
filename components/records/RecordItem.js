@@ -16,23 +16,15 @@ function RecordItem(props) {
   } = props.event;
 
   async function downloadRecordHandler() {
-
     const response = await downloadRecord(userCtx.token, id);
     Linking.openURL(response.request.responseURL)
-
-    // Añadir preview de pdf
-    // <WebView
-    // source={{ uri: fileUrl }}
-    // style={{ flex: 1 }}
-    // />
-    
   }
 
   return (
     <Pressable className="flex-row space-x-4">
       <Image
         className="w-14 h-14 object-contain rounded-md"
-        source={{ uri: "https://blog.hubspot.com/hubfs/image8-2.jpg" }}
+        source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ731AvgtjfNKrsHyqcB8qrtbN_ujKlbBwqzFdGs6hKvQ&s" }}
       />
       <View className="flex-1">
         <View className="flex-row justify-between">
