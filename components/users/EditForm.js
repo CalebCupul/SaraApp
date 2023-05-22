@@ -6,7 +6,7 @@ import { UserContext } from "../../contexts/UserContext";
 
 function EditForm() {
   const userCtx = useContext(UserContext);
-  
+
   const [inputValues, setInputValues] = useState({
     name: userCtx.userInfo.name,
     email: userCtx.userInfo.email,
@@ -34,39 +34,54 @@ function EditForm() {
     }));
   };
 
-  function asd(){
-    console.log(userCtx)
-  }
-
   async function editHandler() {
     const { confirmPassword, ...userData } = inputValues;
-  
+
     const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     const emailIsValid = regex.test(userData.email);
-    const passwordIsValid = !inputValues.password || inputValues.password.length > 0;
-    const confirmPasswordIsValid = !inputValues.confirmPassword || inputValues.confirmPassword.length > 0;
-  
-    if (!passwordIsValid || !emailIsValid || !confirmPasswordIsValid) {
+    const passwordIsValid =
+      !inputValues.password || inputValues.password.length > 0;
+    const confirmPasswordIsValid =
+      !inputValues.confirmPassword || inputValues.confirmPassword.length > 0;
+
+    if (
+      !passwordIsValid ||
+      userData.email.length === 0 ||
+      !confirmPasswordIsValid
+    ) {
       Alert.alert(
         "Formulario incompleto",
         "Complete todos los campos para ingresar."
       );
       return;
+    } else if (!emailIsValid) {
+      Alert.alert("Formulario incompleto", "El correo no es válido.");
+      return;
     } else if (inputValues.password && userData.password !== confirmPassword) {
       Alert.alert("Formulario incompleto", "Las contraseñas no coinciden.");
       return;
-    } else if (inputValues.password && (confirmPassword.length <= 8 || inputValues.password.length <= 8)) {
+    } else if (
+      inputValues.password &&
+      (confirmPassword.length <= 8 || inputValues.password.length <= 8)
+    ) {
       Alert.alert(
         "Contraseña muy corta",
         "La contraseña debe tener más de 8 caracteres"
       );
       return;
     }
-  
+
     const data = await editUser(userCtx.token, userCtx.userInfo.id, {
       ...userData,
       confirmPassword: undefined, // Exclude confirmPassword property
     });
+    if (data.errors) {
+      Alert.alert("Error", data.errors.email[0]); // fix later
+    } else {
+      Alert.alert("Hecho!", "Tu cuenta se actualizó con éxito.");
+      userCtx.authenticate(data.user)
+
+    }
   }
   return (
     <View>

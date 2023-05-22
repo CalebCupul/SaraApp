@@ -7,11 +7,11 @@ import {
   Pressable,
   ScrollView,
   Text,
-  View,
+  View
 } from "react-native";
 import { createUser } from "../../api/authApi";
-import LoadingOverlay from "../../components/UI/LoadingOverlay";
 import SignUpForm from "../../components/auth/SignUpForm";
+import LoadingOverlay from "../../components/UI/LoadingOverlay";
 import { UserContext } from "../../contexts/UserContext";
 
 function SignUpScreen({ navigation }) {
@@ -23,7 +23,16 @@ function SignUpScreen({ navigation }) {
     setIsAuthenticating(true);
     const data = await createUser(name, code, email, password);
     if (data.errors) {
-      Alert.alert("Error", data.errors.email[0]); // fix later
+      let error = ''
+      if (data.errors.email){
+        error = data.errors.email[0]
+      } else if (data.errors.code){
+        error = data.errors.code[0]
+      } else{
+        error = 'Ocurrió un problema, intenta denuevo.'
+      }
+      
+      Alert.alert("Error", error); // fix later
     } else {
       userCtx.authenticate(data.data); // use token to authenticate user
     }
