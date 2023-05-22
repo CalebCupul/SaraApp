@@ -1,6 +1,15 @@
 import * as Crypto from "expo-crypto";
 import { useContext, useEffect, useState } from "react";
-import { FlatList, Pressable, Text, TextInput, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  Pressable,
+  RefreshControl,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import {
   AdjustmentsHorizontalIcon,
   MagnifyingGlassIcon,
@@ -16,15 +25,14 @@ function EventsScreen() {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [maxPages, setMaxPages] = useState(null);
+  const [initialFetchComplete, setInitialFetchComplete] = useState(false);
 
   useEffect(() => {
     fetchEvents();
   }, []);
 
   const fetchEvents = async () => {
-    
     if (loading || (maxPages !== null && currentPage > maxPages)) {
-      console.log("inside if with loading: " + loading);
       return;
     }
 
@@ -40,6 +48,7 @@ function EventsScreen() {
       console.log(error);
     } finally {
       setLoading(false);
+      setInitialFetchComplete(true);
     }
   };
 
@@ -59,50 +68,89 @@ function EventsScreen() {
   }
 
   return (
-    <>
-      <View className="pt-14">
-        <View className="flex-row p-4 space-x-2">
-          <View className="bg-white p-2 rounded-md flex-1 flex-row space-x-2">
-            <MagnifyingGlassIcon color="#1C1C1E" />
-            <TextInput placeholder="Buscar eventos" />
+    <View>
+      {initialFetchComplete ? (
+      events.length > 0 ? (
+        <View className="pt-14">
+          <View className="flex-row p-4 space-x-2">
+            <View className="bg-white p-2 rounded-md flex-1 flex-row space-x-2">
+              <MagnifyingGlassIcon color="#1C1C1E" />
+              <TextInput placeholder="Buscar eventos" />
+            </View>
+            <View className="bg-white rounded-md">
+              <Pressable android_ripple={{ color: "gray", borderless: true }}>
+                <View className="p-2">
+                  <AdjustmentsHorizontalIcon
+                    color="#1C1C1E"
+                    width={26}
+                    height={26}
+                  />
+                </View>
+              </Pressable>
+            </View>
           </View>
-          <View className="bg-white rounded-md">
-            <Pressable android_ripple={{ color: "gray", borderless: true }}>
-              <View className="p-2">
-                <AdjustmentsHorizontalIcon
-                  color="#1C1C1E"
-                  width={26}
-                  height={26}
-                />
-              </View>
-            </Pressable>
+          <View className="px-4 pb-56">
+            <Text className="text-lg" style={{ fontFamily: "UrbanistBold" }}>
+              ¡Bienvenido de vuelta,{" "}
+              {userCtx.userInfo.name && (
+                <Text
+                  className="text-lg capitalize"
+                  style={{ fontFamily: "UrbanistBold" }}
+                >
+                  {userCtx.userInfo.name.split(" ")[0]}
+                </Text>
+              )}
+              !
+            </Text>
+            <FlatList
+              data={events}
+              renderItem={({ item }) => <EventItem event={item} />}
+              keyExtractor={(item) => Crypto.randomUUID()}
+              onEndReached={fetchEvents}
+              onEndReachedThreshold={0.1}
+              refreshing={loading}
+              onRefresh={() => handleOnRefresh()}
+            />
           </View>
         </View>
-        <View className="px-4 pb-56">
-          <Text className="text-lg" style={{ fontFamily: "UrbanistBold" }}>
-            ¡Bienvenido de vuelta,{" "}
-            {userCtx.userInfo.name && (
-              <Text
-                className="text-lg capitalize"
-                style={{ fontFamily: "UrbanistBold" }}
-              >
-                {userCtx.userInfo.name.split(" ")[0]}
-              </Text>
-            )}
-            !
-          </Text>
-          <FlatList
-            data={events}
-            renderItem={({ item }) => <EventItem event={item} />}
-            keyExtractor={(item) => Crypto.randomUUID()}
-            onEndReached={fetchEvents}
-            onEndReachedThreshold={0.1}
-            refreshing={loading}
-            onRefresh={() => handleOnRefresh()}
-          />
-        </View>
-      </View>
-    </>
+      ) : (
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={loading}
+              onRefresh={() => handleOnRefresh()}
+            />
+          }
+          className="h-full bg-white"
+          contentContainerStyle={{
+            display: "flex",
+            flexGrow: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <View className=" p-4 ">
+            <Text
+              style={{ fontFamily: "UrbanistBold" }}
+              className="text-lg text-center"
+            >
+              Parece que no hay eventos.
+            </Text>
+            <Text
+              style={{ fontFamily: "UrbanistBold" }}
+              className="text-lg mb-2 text-center"
+            >
+              ¡Vuelve después cuando exista alguna convocatoria nueva!
+            </Text>
+            <Image
+              className="w-72 h-72 mx-auto"
+              style={{ resizeMode: "contain" }}
+              source={require('../../assets/events/noEvents.png')}
+            />
+          </View>
+        </ScrollView>
+      )) : null}
+    </View>
   );
 }
 

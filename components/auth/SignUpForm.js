@@ -55,6 +55,9 @@ function SignUpForm(props) {
     } else if (userData.password !== userData.confirmPassword) {
       Alert.alert("Formulario incompleto", "Las constraseñas no coindicen.");
       return;
+    } else if (userData.confirmPassword.length <= 8 || userData.password.length <= 8) {
+      Alert.alert("Contraseña muy corta", "La contraseña debe tener más de 8 caracteres");
+      return;
     }
     props.onSignUp(userData);
   }

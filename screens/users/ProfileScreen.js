@@ -21,9 +21,7 @@ function ProfileScreen({ navigation }) {
       <View className="mt-10">
         <Image
           className="bg-black w-40 h-40 rounded-full mx-auto"
-          source={{
-            uri: "https://t3.ftcdn.net/jpg/04/43/94/64/360_F_443946416_l2xXrFoIuUkItmyscOK5MNh6h0Vai3Ua.jpg",
-          }}
+          source={require('../../assets/users/defaultUser.jpg')}
         />
         <View className="mt-4">
           <Text

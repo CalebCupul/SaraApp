@@ -43,14 +43,13 @@ function EventDetailsScreen({ route }) {
               <Text
                 style={{ fontFamily: "UrbanistMedium" }}
                 className="text-dark-gray"
-              >
-                {event.lugar}
+              >{event.lugar}
               </Text>
             </View>
           </View>
           <Image
             className="w-16 h-16 object-contain rounded-md"
-            source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ731AvgtjfNKrsHyqcB8qrtbN_ujKlbBwqzFdGs6hKvQ&s" }}
+            source={require('../../assets/events/eventImage.png')}
           />
         </View>
         {/* <View>

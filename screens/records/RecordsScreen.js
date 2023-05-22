@@ -1,15 +1,22 @@
 import { useContext, useEffect, useState } from "react";
-import { FlatList, Text, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  RefreshControl,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 import { getRecords } from "../../api/recordsApi";
 import RecordItem from "../../components/records/RecordItem";
 import { UserContext } from "../../contexts/UserContext";
-
 function RecordsScreen() {
   const userCtx = useContext(UserContext);
   const [records, setRecords] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [maxPages, setMaxPages] = useState(null);
+  const [initialFetchComplete, setInitialFetchComplete] = useState(false);
 
   useEffect(() => {
     fetchRecords();
@@ -25,7 +32,7 @@ function RecordsScreen() {
       const response = await getRecords(
         currentPage,
         userCtx.token,
-        userCtx.userInfo.email
+        userCtx.userInfo.code
       );
       if (!maxPages) {
         setMaxPages(response.meta.last_page);
@@ -37,6 +44,7 @@ function RecordsScreen() {
       console.log(error);
     } finally {
       setLoading(false);
+      setInitialFetchComplete(true);
     }
   };
 
@@ -46,7 +54,7 @@ function RecordsScreen() {
       const response = await getRecords(
         1,
         userCtx.token,
-        userCtx.userInfo.email
+        userCtx.userInfo.code
       );
       setMaxPages(response.meta.last_page);
       setRecords([...response.data]);
@@ -57,50 +65,77 @@ function RecordsScreen() {
       setLoading(false);
     }
   }
+
   return (
-    // PENDIENTE: CREAR LIST FOOTER COMPONENT PARA REUTILIZAR, AGREGARLE PADDING SOBRE ESTE COMPONENTE
-    // Pressable sobre componente, sobre icono preparar descarga, sobre card redireccionar a constancia detail data: evento y constancia
-    <View className="p-4 pt-14">
-      {records.length > 0 && (
-        <Text style={{ fontFamily: "UrbanistBold" }} className="text-lg mb-2">
-          {records.length + " constancias"}
-        </Text>
-      )}
-      <FlatList
-        className="p-4 bg-white rounded-md"
-        data={records}
-        ItemSeparatorComponent={
-          <View
-            style={{ height: 0.5, width: "100%", backgroundColor: "#C8C8C8" }}
-            className="my-4 self-center"
-          />
-        }
-        renderItem={({ item }) => <RecordItem event={item} />}
-        keyExtractor={(item) => item.id.toString()}
-        onEndReached={fetchRecords}
-        onEndReachedThreshold={0.1}
-        refreshing={loading}
-            onRefresh={() => handleOnRefresh()}
-        // ListFooterComponent={() => {
-        //   if (loading) {
-        //     return (
-        //       <ActivityIndicator
-        //         size="large"
-        //         color="#0000ff"
-        //         className="mt-4 pb-16"
-        //       />
-        //     );
-        //   } else if (currentPage > maxPages) {
-        //     return (
-        //       <View className="pb-16">
-        //         <Text>No more events to fetch</Text>
-        //       </View>
-        //     );
-        //   } else {
-        //     return null;
-        //   }
-        // }}
-      />
+    <View className="pt-14">
+      {initialFetchComplete ? (
+        records.length > 0 ? (
+          <View className="p-4">
+            <Text
+              style={{ fontFamily: "UrbanistBold" }}
+              className="text-lg mb-2"
+            >
+              {records.length + " constancias"}
+            </Text>
+            <FlatList
+              className="p-4 bg-white rounded-md"
+              data={records}
+              ItemSeparatorComponent={
+                <View
+                  style={{
+                    height: 0.5,
+                    width: "100%",
+                    backgroundColor: "#C8C8C8",
+                  }}
+                  className="my-4 self-center"
+                />
+              }
+              renderItem={({ item }) => <RecordItem event={item} />}
+              keyExtractor={(item) => item.id.toString()}
+              onEndReached={fetchRecords}
+              onEndReachedThreshold={0.1}
+              refreshing={loading}
+              onRefresh={() => handleOnRefresh()}
+            />
+          </View>
+        ) : (
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={loading}
+                onRefresh={() => handleOnRefresh()}
+              />
+            }
+            className="h-full bg-white"
+            contentContainerStyle={{
+              display: "flex",
+              flexGrow: 1,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <View className="">
+              <Text
+                style={{ fontFamily: "UrbanistBold" }}
+                className="text-lg text-center"
+              >
+                Parece que aún no tienes constancias.
+              </Text>
+              <Text
+                style={{ fontFamily: "UrbanistBold" }}
+                className="text-lg mb-2 text-center"
+              >
+                ¡Asiste a los eventos universitarios y obtén una!
+              </Text>
+              <Image
+                className="w-72 h-72 mx-auto"
+                style={{ resizeMode: "contain" }}
+                source={require('../../assets/shared/noRecords.png')}
+              />
+            </View>
+          </ScrollView>
+        )
+      ) : null}
     </View>
   );
 }

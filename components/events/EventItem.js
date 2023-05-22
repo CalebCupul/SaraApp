@@ -18,7 +18,7 @@ function EventItem(props) {
           <View className="flex-row space-x-4">
             <Image
               className="w-14 h-14 object-contain rounded-md"
-              source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ731AvgtjfNKrsHyqcB8qrtbN_ujKlbBwqzFdGs6hKvQ&s" }}
+              source={require('../../assets/events/eventImage.png')}
             />
             <View className="flex-1">
               <View className="flex-row justify-between">

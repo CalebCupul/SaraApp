@@ -42,9 +42,7 @@ function LoginScreen({ navigation }) {
         <Image
           className="w-60 h-44 mx-auto mt-10 mb-5"
           style={{ resizeMode: "contain" }}
-          source={{
-            uri: "https://s3.amazonaws.com/s3.timetoast.com/public/uploads/photo/18154412/image/medium-62a2dae6b05a2a5c4f4ee257d9eb1cac.png",
-          }}
+          source={require('../../assets/shared/logo.png')}
         />
         <Text
           className="text-4xl text-dark-gray mt-10"

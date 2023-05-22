@@ -1,10 +1,10 @@
 import { API_BASE_URL } from "@env";
 import axios from "axios";
 
-export const getRecords = async (page = 1, token, email) => {
+export const getRecords = async (page = 1, token, code) => {
   try {
     const response = await axios.get(
-      `${API_BASE_URL}/asistencias?page=${page}&email=${email}`,
+      `${API_BASE_URL}/user/${code}/asistencias`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
