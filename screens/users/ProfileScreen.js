@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import { Image, Modal, Pressable, Text, View } from "react-native";
 import {
   ArrowLeftOnRectangleIcon,
-  BellAlertIcon,
   ChevronRightIcon,
   Cog6ToothIcon,
   QrCodeIcon
@@ -93,7 +92,7 @@ function ProfileScreen({ navigation }) {
               </View>
             </View>
           </Pressable>
-          <Pressable onPress={() => navigation.navigate("NotificationScreen")}>
+          {/* <Pressable onPress={() => navigation.navigate("NotificationScreen")}>
             <View className="flex flex-row space-x-2 items-center">
               <BellAlertIcon style={{ color: "#1C1C1E" }} width={22} />
               <View className="flex flex-row justify-around items-center">
@@ -106,7 +105,7 @@ function ProfileScreen({ navigation }) {
                 <ChevronRightIcon style={{ color: "#1C1C1E" }} width={22} />
               </View>
             </View>
-          </Pressable>
+          </Pressable> */}
           <Pressable onPress={() => userCtx.logout()}>
             <View className="flex flex-row space-x-2 items-center">
               <ArrowLeftOnRectangleIcon
